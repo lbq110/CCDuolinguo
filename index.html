@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Code 学习 - 多邻国风格</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <!-- 顶部导航 -->
+        <header class="header">
+            <div class="header-left">
+                <div class="logo">
+                    <span class="logo-icon">🤖</span>
+                    <span class="logo-text">Claude Code 学习</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="streak">
+                    <span class="streak-icon">🔥</span>
+                    <span class="streak-count" id="streakCount">0</span>
+                </div>
+                <div class="xp">
+                    <span class="xp-icon">⭐</span>
+                    <span class="xp-count" id="xpCount">0</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- 主内容区 -->
+        <main class="main-content">
+            <!-- 课程地图视图 -->
+            <div id="courseMap" class="course-map">
+                <h1 class="page-title">Claude Code 工作流程</h1>
+                <p class="page-subtitle">掌握 Claude Code 的常见使用场景</p>
+                <div class="skill-tree" id="skillTree">
+                    <!-- 课程单元将由 JS 动态生成 -->
+                </div>
+            </div>
+
+            <!-- 课程学习视图 -->
+            <div id="lessonView" class="lesson-view hidden">
+                <div class="lesson-header">
+                    <button class="back-btn" id="backBtn">
+                        <span>✕</span>
+                    </button>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="lessonProgress"></div>
+                    </div>
+                    <div class="hearts">
+                        <span class="heart-icon">❤️</span>
+                        <span class="heart-count" id="heartCount">5</span>
+                    </div>
+                </div>
+
+                <div class="lesson-content" id="lessonContent">
+                    <!-- 课程内容由 JS 动态生成 -->
+                </div>
+
+                <div class="lesson-footer">
+                    <button class="check-btn" id="checkBtn" disabled>检查</button>
+                </div>
+            </div>
+
+            <!-- 课程完成视图 -->
+            <div id="completeView" class="complete-view hidden">
+                <div class="complete-content">
+                    <div class="complete-icon">🎉</div>
+                    <h2 class="complete-title">课程完成！</h2>
+                    <div class="complete-stats">
+                        <div class="stat-item">
+                            <span class="stat-value" id="earnedXp">0</span>
+                            <span class="stat-label">获得经验</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="accuracy">0%</span>
+                            <span class="stat-label">正确率</span>
+                        </div>
+                    </div>
+                    <button class="continue-btn" id="continueBtn">继续</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="courses.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
