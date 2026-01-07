@@ -6,6 +6,7 @@ const courseData = {
             title: "入门基础",
             description: "了解 Claude Code 的基本使用",
             icon: "🚀",
+            sourceUrl: "https://code.claude.com/docs/zh-CN/common-workflows",
             lessons: [
                 {
                     id: 1,
@@ -105,6 +106,7 @@ claude
             title: "修复与重构",
             description: "学习如何高效修复 Bug 和重构代码",
             icon: "🔧",
+            sourceUrl: "https://code.claude.com/docs/zh-CN/common-workflows",
             lessons: [
                 {
                     id: 3,
@@ -195,6 +197,7 @@ Claude 会分析错误并提供修复建议。你还可以：
             title: "高级功能",
             description: "掌握计划模式、扩展思考等高级特性",
             icon: "⚡",
+            sourceUrl: "https://code.claude.com/docs/zh-CN/common-workflows",
             lessons: [
                 {
                     id: 5,
@@ -300,6 +303,7 @@ claude --permission-mode plan
             title: "Git 与协作",
             description: "学习使用 Claude Code 进行版本控制和团队协作",
             icon: "🤝",
+            sourceUrl: "https://code.claude.com/docs/zh-CN/common-workflows",
             lessons: [
                 {
                     id: 7,
@@ -399,6 +403,7 @@ git worktree remove ../project-feature-a</code></div>
             title: "实用技巧",
             description: "掌握引用文件、使用图像、自定义命令等技巧",
             icon: "💡",
+            sourceUrl: "https://code.claude.com/docs/zh-CN/common-workflows",
             lessons: [
                 {
                     id: 9,
@@ -548,6 +553,7 @@ echo "Analyze the performance of this code and suggest optimizations:" > .claude
             title: "会话与管道",
             description: "恢复对话、管道操作和输出格式控制",
             icon: "🔄",
+            sourceUrl: "https://code.claude.com/docs/zh-CN/common-workflows",
             lessons: [
                 {
                     id: 12,
@@ -642,6 +648,377 @@ cat log.txt | claude -p 'parse errors' --output-format stream-json</code></div>
                             ],
                             correctIndex: 1,
                             explanation: "使用 --output-format json 指定 JSON 输出格式。"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            id: 7,
+            title: "子代理",
+            description: "学习创建和使用专业化的子代理",
+            icon: "🤖",
+            sourceUrl: "https://code.claude.com/docs/zh-CN/sub-agents",
+            lessons: [
+                {
+                    id: 14,
+                    icon: "👋",
+                    questions: [
+                        {
+                            type: "knowledge",
+                            title: "什么是子代理？",
+                            content: `子代理（Sub-agents）是 Claude Code 中的专门 AI 助手，可以被主 Claude 调用来处理特定类型的任务。
+
+<strong>核心特点：</strong>
+• 独立的上下文窗口
+• 自定义系统提示
+• 特定工具访问权限
+• 与主对话分离，防止上下文污染`,
+                            tip: "子代理就像专家顾问，主 Claude 可以随时召唤它们处理专业问题！"
+                        },
+                        {
+                            type: "multiple-choice",
+                            question: "以下哪项不是子代理的主要优势？",
+                            options: [
+                                "自动生成文档",
+                                "上下文保留 - 主对话保持聚焦",
+                                "专业化专业知识 - 针对特定领域微调",
+                                "可重用性 - 跨项目使用和团队共享"
+                            ],
+                            correctIndex: 0,
+                            explanation: "子代理的四大优势是：上下文保留、专业化专业知识、可重用性和灵活的权限。自动生成文档不是子代理的优势，这是它可能执行的任务，不是架构优势。"
+                        },
+                        {
+                            type: "knowledge",
+                            title: "子代理配置文件放在哪里？",
+                            content: `子代理配置文件可以放在两个位置：
+
+<strong>项目级别：</strong>
+<div class="code-block"><code>.claude/agents/</code></div>
+
+<strong>用户级别：</strong>
+<div class="code-block"><code>~/.claude/agents/</code></div>
+
+<strong>优先级顺序：</strong>
+项目级别 > 用户级别 > CLI定义`,
+                            tip: "项目级别的配置优先级最高，适合定义项目专用的子代理！"
+                        }
+                    ]
+                },
+                {
+                    id: 15,
+                    icon: "⚙️",
+                    questions: [
+                        {
+                            type: "fill-blank",
+                            question: "子代理配置文件的格式是什么？",
+                            template: ["子代理配置文件使用 ", "___", " 前置内容 + Markdown 格式"],
+                            blanks: [
+                                { id: 0, answer: "YAML" }
+                            ],
+                            wordBank: ["YAML", "JSON", "TOML", "XML"]
+                        },
+                        {
+                            type: "multiple-choice",
+                            question: "在子代理配置中，哪两个字段是必需的？",
+                            options: [
+                                "name 和 description",
+                                "name 和 tools",
+                                "description 和 model",
+                                "tools 和 model"
+                            ],
+                            correctIndex: 0,
+                            explanation: "name（唯一标识符）和 description（目的描述）是必需字段。tools 和 model 是可选的，省略 tools 则继承所有工具，省略 model 则使用默认模型。"
+                        },
+                        {
+                            type: "fill-blank",
+                            question: "如果想让子代理使用与主对话相同的模型，应该将 model 字段设置为什么？",
+                            template: ["model: ", "___"],
+                            blanks: [
+                                { id: 0, answer: "inherit" }
+                            ],
+                            wordBank: ["inherit", "same", "parent", "default"]
+                        }
+                    ]
+                },
+                {
+                    id: 16,
+                    icon: "🔧",
+                    questions: [
+                        {
+                            type: "multiple-choice",
+                            question: "以下哪个不是子代理支持的模型别名？",
+                            options: [
+                                "gpt-4",
+                                "sonnet",
+                                "opus",
+                                "haiku"
+                            ],
+                            correctIndex: 0,
+                            explanation: "子代理支持的模型别名包括：sonnet、opus、haiku，以及 inherit（继承主对话模型）。gpt-4 是 OpenAI 的模型，不属于 Claude 系列。"
+                        },
+                        {
+                            type: "ordering",
+                            question: "使用 /agents 命令创建子代理的正确步骤顺序是什么？",
+                            items: [
+                                "运行 /agents 命令",
+                                "选择「创建新代理」",
+                                "定义配置（name、description 等）",
+                                "保存配置文件"
+                            ],
+                            correctOrder: [0, 1, 2, 3]
+                        },
+                        {
+                            type: "fill-blank",
+                            question: "如果想让子代理只能使用 Read、Grep 和 Glob 工具，应该如何配置？",
+                            template: ["tools: Read, ", "___", ", Glob"],
+                            blanks: [
+                                { id: 0, answer: "Grep" }
+                            ],
+                            wordBank: ["Grep", "Search", "Find", "Query"]
+                        }
+                    ]
+                },
+                {
+                    id: 17,
+                    icon: "🎯",
+                    questions: [
+                        {
+                            type: "scenario",
+                            title: "代码审查自动化",
+                            subtitle: "你刚完成了一段重要的代码修改",
+                            icon: "🔍",
+                            conversation: [
+                                { role: "system", text: "你在项目中配置了一个 code-reviewer 子代理，description 包含 \"修改代码后立即使用\"" },
+                                { role: "user", text: "我刚修改了用户认证模块" },
+                                { role: "system", text: "Claude 检测到代码修改与 code-reviewer 的 description 匹配" }
+                            ],
+                            question: "在这种情况下，Claude 会如何处理？",
+                            options: [
+                                "自动调用 code-reviewer 子代理进行代码审查",
+                                "询问用户是否需要代码审查",
+                                "忽略，因为用户没有显式要求审查",
+                                "报错，因为子代理不能自动调用"
+                            ],
+                            correctIndex: 0
+                        },
+                        {
+                            type: "multiple-choice",
+                            question: "如果想让 Claude 主动使用某个子代理，应该在 description 中包含什么关键词？",
+                            options: [
+                                "use PROACTIVELY 或 MUST BE USED",
+                                "AUTO_RUN 或 ALWAYS_USE",
+                                "REQUIRED 或 MANDATORY",
+                                "DEFAULT 或 PRIMARY"
+                            ],
+                            correctIndex: 0,
+                            explanation: "在 description 中包含 \"use PROACTIVELY\" 或 \"MUST BE USED\" 可以鼓励 Claude 主动使用该子代理，而不是等待用户显式调用。"
+                        },
+                        {
+                            type: "scenario",
+                            title: "长时间任务处理",
+                            subtitle: "你需要分析一个大型模块的代码",
+                            icon: "🔄",
+                            conversation: [
+                                { role: "user", text: "Use the code-analyzer agent to start reviewing auth module" },
+                                { role: "system", text: "子代理开始分析，返回 agentId: \"abc123\"，但分析中断了" },
+                                { role: "user", text: "需要继续之前的分析工作" }
+                            ],
+                            question: "如何继续之前中断的子代理任务？",
+                            options: [
+                                "使用 Resume agent abc123 命令恢复子代理",
+                                "重新运行相同的命令",
+                                "删除并重建子代理",
+                                "无法恢复，只能重新开始"
+                            ],
+                            correctIndex: 0
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            id: 8,
+            title: "插件系统",
+            description: "学习创建和管理 Claude Code 插件",
+            icon: "🔌",
+            sourceUrl: "https://code.claude.com/docs/zh-CN/plugins",
+            lessons: [
+                {
+                    id: 18,
+                    icon: "👋",
+                    questions: [
+                        {
+                            type: "knowledge",
+                            title: "什么是插件？",
+                            content: `插件（Plugins）是通过自定义命令、代理、钩子、技能和 MCP 服务器来扩展 Claude Code 功能的可复用模块。
+
+<strong>插件可以包含：</strong>
+• 自定义斜杠命令（commands/）
+• 自定义代理（agents/）
+• 代理技能（skills/）
+• 事件钩子（hooks/）
+• MCP 服务器配置（.mcp.json）`,
+                            tip: "插件可以在项目和团队中共享，是扩展 Claude Code 的最佳方式！"
+                        },
+                        {
+                            type: "multiple-choice",
+                            question: "以下哪项不是插件可以扩展的功能？",
+                            options: [
+                                "修改 Claude 的底层模型",
+                                "自定义斜杠命令",
+                                "代理技能（Skills）",
+                                "MCP 服务器集成"
+                            ],
+                            correctIndex: 0,
+                            explanation: "插件可以扩展命令、代理、技能、钩子和 MCP 服务器，但不能修改 Claude 的底层模型。"
+                        },
+                        {
+                            type: "knowledge",
+                            title: "插件目录结构",
+                            content: `一个完整的插件目录结构：
+
+<div class="code-block"><code>my-plugin/
+├── .claude-plugin/
+│   └── plugin.json      # 插件元数据（必需）
+├── commands/            # 自定义命令
+├── agents/              # 自定义代理
+├── skills/              # 代理技能
+├── hooks/               # 事件钩子
+└── .mcp.json           # MCP 配置</code></div>`,
+                            tip: "只有 .claude-plugin/plugin.json 是必需的，其他目录都是可选的！"
+                        }
+                    ]
+                },
+                {
+                    id: 19,
+                    icon: "⚙️",
+                    questions: [
+                        {
+                            type: "fill-blank",
+                            question: "插件的元数据配置文件放在哪里？",
+                            template: ["插件元数据文件位于 ", "___", "/plugin.json"],
+                            blanks: [
+                                { id: 0, answer: ".claude-plugin" }
+                            ],
+                            wordBank: [".claude-plugin", ".claude", "config", ".plugin"]
+                        },
+                        {
+                            type: "multiple-choice",
+                            question: "plugin.json 中哪些字段是必需的？",
+                            options: [
+                                "name、version、description、author",
+                                "name、commands、agents",
+                                "version、hooks、skills",
+                                "description、mcp、settings"
+                            ],
+                            correctIndex: 0,
+                            explanation: "plugin.json 必须包含 name（唯一标识符）、version（语义版本）、description（功能说明）和 author（作者信息）四个必需字段。"
+                        },
+                        {
+                            type: "fill-blank",
+                            question: "安装一个名为 formatter 的插件，来自 your-org 市场：",
+                            template: ["/plugin install ", "___"],
+                            blanks: [
+                                { id: 0, answer: "formatter@your-org" }
+                            ],
+                            wordBank: ["formatter@your-org", "your-org/formatter", "formatter from your-org", "formatter"]
+                        }
+                    ]
+                },
+                {
+                    id: 20,
+                    icon: "🛠️",
+                    questions: [
+                        {
+                            type: "ordering",
+                            question: "创建一个新插件的正确步骤顺序是什么？",
+                            items: [
+                                "创建插件目录结构",
+                                "创建 .claude-plugin/plugin.json",
+                                "添加命令/代理/技能等组件",
+                                "创建市场清单 marketplace.json",
+                                "安装并测试插件"
+                            ],
+                            correctOrder: [0, 1, 2, 3, 4]
+                        },
+                        {
+                            type: "multiple-choice",
+                            question: "如何浏览和管理已安装的插件？",
+                            options: [
+                                "/plugin",
+                                "/plugins list",
+                                "/show plugins",
+                                "/manage plugins"
+                            ],
+                            correctIndex: 0,
+                            explanation: "使用 /plugin 命令可以打开交互式菜单，浏览市场、安装插件、管理已安装的插件等。"
+                        },
+                        {
+                            type: "fill-blank",
+                            question: "添加一个本地开发市场：",
+                            template: ["/plugin marketplace add ", "___"],
+                            blanks: [
+                                { id: 0, answer: "./dev-marketplace" }
+                            ],
+                            wordBank: ["./dev-marketplace", "dev-marketplace", "local:dev-marketplace", "--local dev-marketplace"]
+                        }
+                    ]
+                },
+                {
+                    id: 21,
+                    icon: "🎯",
+                    questions: [
+                        {
+                            type: "scenario",
+                            title: "本地插件开发",
+                            subtitle: "你正在开发一个新插件，需要反复测试",
+                            icon: "🔧",
+                            conversation: [
+                                { role: "system", text: "你修改了插件的命令文件" },
+                                { role: "user", text: "修改后如何让更改生效？" },
+                                { role: "system", text: "Claude Code 不会自动重新加载插件" }
+                            ],
+                            question: "如何让插件修改生效？",
+                            options: [
+                                "卸载并重新安装插件",
+                                "重启电脑",
+                                "运行 /plugin refresh",
+                                "修改会自动生效"
+                            ],
+                            correctIndex: 0
+                        },
+                        {
+                            type: "multiple-choice",
+                            question: "如何为团队自动配置插件？",
+                            options: [
+                                "在项目的 .claude/settings.json 中配置 plugins",
+                                "让每个人手动安装",
+                                "在 package.json 中添加依赖",
+                                "使用环境变量配置"
+                            ],
+                            correctIndex: 0,
+                            explanation: "在项目的 .claude/settings.json 中配置 plugins.marketplaces 和 plugins.installed，可以为团队成员自动安装指定插件。"
+                        },
+                        {
+                            type: "scenario",
+                            title: "插件调试",
+                            subtitle: "你安装了插件但命令没有出现",
+                            icon: "🔍",
+                            conversation: [
+                                { role: "user", text: "/plugin install my-plugin@dev" },
+                                { role: "system", text: "安装成功" },
+                                { role: "user", text: "/my-command" },
+                                { role: "system", text: "命令未找到" }
+                            ],
+                            question: "最可能的原因是什么？",
+                            options: [
+                                "命令目录不在插件根目录，或 plugin.json 格式错误",
+                                "需要付费才能使用",
+                                "Claude Code 版本太低",
+                                "网络连接问题"
+                            ],
+                            correctIndex: 0
                         }
                     ]
                 }

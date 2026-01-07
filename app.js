@@ -194,6 +194,35 @@ class ClaudeCodeLearning {
         this.elements.heartCount.textContent = this.state.hearts;
     }
 
+    // 复制来源链接
+    copySourceUrl(url, btn) {
+        navigator.clipboard.writeText(url).then(() => {
+            const originalText = btn.textContent;
+            btn.textContent = '✓ 已复制';
+            btn.classList.add('copied');
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.classList.remove('copied');
+            }, 2000);
+        }).catch(() => {
+            // 降级方案
+            const textarea = document.createElement('textarea');
+            textarea.value = url;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+
+            const originalText = btn.textContent;
+            btn.textContent = '✓ 已复制';
+            btn.classList.add('copied');
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.classList.remove('copied');
+            }, 2000);
+        });
+    }
+
     // 渲染技能树
     renderSkillTree() {
         this.elements.skillTree.innerHTML = '';
@@ -208,7 +237,22 @@ class ClaudeCodeLearning {
             headerEl.innerHTML = `
                 <div class="unit-title">${unit.icon} ${unit.title}</div>
                 <div class="unit-description">${unit.description}</div>
+                ${unit.sourceUrl ? `
+                    <button class="source-link-btn" data-url="${unit.sourceUrl}" title="复制参考链接">
+                        📎 参考文档
+                    </button>
+                ` : ''}
             `;
+
+            // 绑定复制按钮事件
+            const copyBtn = headerEl.querySelector('.source-link-btn');
+            if (copyBtn) {
+                copyBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    this.copySourceUrl(copyBtn.dataset.url, copyBtn);
+                });
+            }
+
             unitEl.appendChild(headerEl);
 
             // 课程列表
@@ -222,11 +266,8 @@ class ClaudeCodeLearning {
                 const prevUnitLastLesson = unitIndex > 0 ?
                     courseData.units[unitIndex - 1].lessons.slice(-1)[0] : null;
 
-                const isUnlocked = lesson.id === 1 ||
-                    isCompleted ||
-                    (prevLesson && this.state.completedLessons.includes(prevLesson.id)) ||
-                    (lessonIndex === 0 && prevUnitLastLesson &&
-                        this.state.completedLessons.includes(prevUnitLastLesson.id));
+                // 所有课程都解锁，不需要按顺序完成
+                const isUnlocked = true;
 
                 // 连接线
                 if (lessonIndex > 0) {
