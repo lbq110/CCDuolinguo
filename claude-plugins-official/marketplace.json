@@ -1,0 +1,14 @@
+{
+  "name": "claude-plugins-official",
+  "version": "1.0.0",
+  "description": "Claude Code 官方插件市场",
+  "author": "Claude Code Team",
+  "plugins": [
+    {
+      "name": "code-simplifier",
+      "version": "1.0.0",
+      "description": "代码简化器 - 自动简化复杂代码，提高可读性和维护性",
+      "path": "./code-simplifier"
+    }
+  ]
+}
